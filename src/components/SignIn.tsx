@@ -24,22 +24,33 @@ const SignIn = () => {
     }
 
     try {
-      const data = await fetchAdminData();
-      const matchedUser = users.some((user) => user.username === inputUsername);
-      const isAdmin = role === "admin" && data.role === "admin";
-      const isUser = role === "user" && (data.role === "user" || matchedUser);
-
-      if (data.role === "user" || matchedUser) {
-        setUsername(data.username || inputUsername);
+      // Check if inputUsername exists in the Redux store first
+      const matchedUser = users.find((user) => user.username === inputUsername);
+      console.log(matchedUser);
+      if (matchedUser && role === "user") {
+        // If user is found in Redux store and role is "user", set username and navigate
+        setUsername(matchedUser.username);
+        navigate("/user-dashboard");
+        return;
+      } else if (matchedUser && role === "admin") {
+        setUsername(matchedUser.username);
+        navigate("/admin-dashboard");
       }
 
+      // If user is not found in Redux store, fetch data from API
+      const data = await fetchAdminData();
+      const isAdmin = role === "admin" && data.role === "admin";
+      const isUser = role === "user" && data.role === "user";
+
       if (isAdmin) {
-        dispatch(setUsers([data]));
+        // Set username from admin data and navigate to admin dashboard
+        setUsername(data.username);
+        dispatch(setUsers([data])); // Optionally update Redux store if admin is logged in
         navigate("/admin-dashboard");
       } else if (isUser) {
+        // Set username from fetched data and navigate to user dashboard
+        setUsername(data.username);
         navigate("/user-dashboard");
-      } else {
-        alert("Invalid credentials");
       }
     } catch (error) {
       console.error("Failed to fetch data:", error);
@@ -51,7 +62,7 @@ const SignIn = () => {
       <div className="w-1/2  flex items-center justify-center">
         <img src={logo} alt="Organization Logo" className="w-3/4 h-auto " />
       </div>
-      
+
       <div className="w-1/2 flex flex-col items-center justify-center p-10 bg-gray-100">
         <h2 className="text-3xl font-bold mb-6">Welcome Back!</h2>
         <div className="w-full max-w-md">
