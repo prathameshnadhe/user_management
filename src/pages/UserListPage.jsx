@@ -9,11 +9,10 @@ const UserListPage = () => {
   const { users, searchQuery, loading, error } = useSelector(
     (state) => state.users
   );
-  console.log("All users in state:", users); // For debugging
 
   useEffect(() => {
     if (users.length === 0) {
-      dispatch(fetchUsers()); // Fetch users only if the list is empty
+      dispatch(fetchUsers());
     }
   }, [dispatch, users.length]);
 

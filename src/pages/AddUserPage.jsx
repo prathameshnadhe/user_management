@@ -23,16 +23,14 @@ const AddUserPage = () => {
     e.preventDefault();
     const { name, email, phone, company } = formData;
 
-    // Validate the form data
     if (!name || !email || !phone || !company) {
       setError("All fields are required.");
       return;
     }
 
-    // Dispatch the addUser action to add the new user
     dispatch(
       addUser({
-        id: Date.now(), // Use current timestamp as the ID
+        id: Date.now(), 
         name,
         email,
         phone,
@@ -40,7 +38,6 @@ const AddUserPage = () => {
       })
     );
 
-    // Navigate back to the user list page after adding the user
     navigate("/");
   };
 
@@ -51,7 +48,6 @@ const AddUserPage = () => {
           Add New User
         </h1>
         <form onSubmit={handleSubmit}>
-          {/* Form fields */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">Name</label>
             <input
