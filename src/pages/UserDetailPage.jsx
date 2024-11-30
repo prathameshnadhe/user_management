@@ -25,7 +25,7 @@ const UserDetailPage = () => {
         <div className="flex items-center space-x-4">
           <div className="w-24 h-24 rounded-full overflow-hidden">
             <img
-              src={`https://i.pravatar.cc/150?img=${user.id}`}
+              src={`https://i.pravatar.cc/150?img=${(user.id % 9) + 1}`}
               alt={user.name}
               className="w-full h-full object-cover"
             />
@@ -36,28 +36,39 @@ const UserDetailPage = () => {
             <p className="text-gray-600">{user.phone}</p>
           </div>
         </div>
-        <p className="text-gray-600">
-          Website:{" "}
-          <a
-            href={`https://${user.website}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
-          >
-            {user.website}
-          </a>
-        </p>
+        {user?.website && (
+          <p className="text-gray-600">
+            Website:{" "}
+            <a
+              href={`https://${user?.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {user?.website}
+            </a>
+          </p>
+        )}
+
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold text-gray-800">Address</h2>
-          <p className="text-gray-600">{`${user.address.suite}, ${user.address.street}, ${user.address.city}`}</p>
+          <p className="text-gray-600">
+            {user?.address
+              ? `${user?.address?.suite}, ${user?.address?.street}, ${user?.address?.city}`
+              : "Address details are unavailable"}
+          </p>
         </div>
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold text-gray-800">Company</h2>
-          <p className="text-gray-600">Name: {user.company.name}</p>
-          <p className="text-gray-600">
-            Catchphrase: {user.company.catchPhrase}
-          </p>
-          <p className="text-gray-600">BS: {user.company.bs}</p>
+          <p className="text-gray-600">Name: {user?.company.name}</p>
+          {user?.company?.catchPhrase && (
+            <p className="text-gray-600">
+              Catchphrase: {user?.company?.catchPhrase}
+            </p>
+          )}
+          {user?.company?.bs && (
+            <p className="text-gray-600">BS: {user?.company?.bs}</p>
+          )}
         </div>
       </div>
     </div>

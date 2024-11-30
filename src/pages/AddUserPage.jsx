@@ -23,14 +23,16 @@ const AddUserPage = () => {
     e.preventDefault();
     const { name, email, phone, company } = formData;
 
+    // Validate all fields
     if (!name || !email || !phone || !company) {
       setError("All fields are required.");
       return;
     }
 
+    // Dispatch the new user to the Redux store
     dispatch(
       addUser({
-        id: Date.now(), 
+        id: Date.now(), // Temporary unique ID
         name,
         email,
         phone,
@@ -38,6 +40,7 @@ const AddUserPage = () => {
       })
     );
 
+    // Navigate to the home page after submission
     navigate("/");
   };
 
@@ -48,6 +51,7 @@ const AddUserPage = () => {
           Add New User
         </h1>
         <form onSubmit={handleSubmit}>
+          {/* Name Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">Name</label>
             <input
@@ -60,6 +64,7 @@ const AddUserPage = () => {
             />
           </div>
 
+          {/* Email Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">
               Email
@@ -74,6 +79,7 @@ const AddUserPage = () => {
             />
           </div>
 
+          {/* Phone Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">
               Phone
@@ -88,6 +94,7 @@ const AddUserPage = () => {
             />
           </div>
 
+          {/* Company Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">
               Company
@@ -102,8 +109,14 @@ const AddUserPage = () => {
             />
           </div>
 
-          {error && <p className="text-red-500 text-center">{error}</p>}
+          {/* Error Message */}
+          {error && (
+            <p className="text-red-500 text-center font-medium mb-4">
+              {error}
+            </p>
+          )}
 
+          {/* Submit Button */}
           <div className="flex items-center justify-center mt-4">
             <button
               type="submit"
