@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, setSearchQuery, addUser } from "../redux/usersSlice";
+import { fetchUsers, setSearchQuery } from "../redux/usersSlice";
 import UserCard from "../components/UserCard";
 import SearchBar from "../components/SearchBar";
 
